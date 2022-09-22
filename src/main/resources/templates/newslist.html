@@ -25,7 +25,7 @@
               <div class="card" style="width: 20rem;height: 35rem; margin: 10px">
                 <img th:src="${news.imageUrl}" class="card-img-top" alt="...">
                 <div class="card-body">
-                  <a th:href="@{http://localhost:8080/news/get-details/(name=${name},uuid=${news.id})}"><h5 class="card-title" strong data-th-text="${news.title}"></h5></a>
+                  <a th:href="@{https://boiling-fjord-31796.herokuapp.com/news/get-details/(name=${name},uuid=${news.id})}"><h5 class="card-title" strong data-th-text="${news.title}"></h5></a>
                   
                   <!-- <a th:href="@{https://boiling-fjord-31796.herokuapp.com/news/get-details/{id}(id=${news.id})}"><h5 class="card-title" strong data-th-text="${news.title}"></h5></a> -->
                   <p class="card-text">Published On: <span data-th-text="${news.pubDate}"></span></p>
