@@ -5,9 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+// import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import vttp2022.ssfminiprojectfinance.models.News;
 import vttp2022.ssfminiprojectfinance.models.NewsList;
@@ -20,33 +20,26 @@ public class FinanceController {
     @Autowired
     private FinanceAPIService financeAPIService;
     
-    @GetMapping("/")
-	public ModelAndView index() {
-		ModelAndView model = new ModelAndView();
-		model.setViewName("index");
-        
-		return model;
+    @GetMapping (path = {"/index" })
+	public String showIndexPage(@RequestParam String name, Model model) {
+        model.addAttribute("name", name);
+		return "index";
 	}
-    
-    @GetMapping(path = "/news/v2/get-details/{uuid}")
-    public String getNews(@PathVariable String uuid, Model model) {
 
+    @GetMapping(path = "/news/get-details")
+    public String getNews(@RequestParam String name, @RequestParam String uuid, Model model) {
+        model.addAttribute("name", name);
         News result = financeAPIService.getNews(uuid);
         model.addAttribute("result", result);
-
-        System.out.println(result);
 
         return "news";
     }
 
-    @PostMapping(path = "/news/v2/list")
-    public String newsList(Model model) {
-        
+    @GetMapping(path = "/newslist")
+    public String newsList(@RequestParam String name, Model model) {
+        model.addAttribute("name", name); 
         NewsList newsList = financeAPIService.getNewsList();
-        System.out.println(newsList);
-        // System.out.println(newsList.getNewsList());
-        model.addAttribute("result", newsList);
-        
+        model.addAttribute("newslist", newsList);
         return "newslist";
     }
 

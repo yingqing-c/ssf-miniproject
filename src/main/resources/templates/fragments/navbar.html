@@ -1,0 +1,43 @@
+<div th:fragment="navbar">
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3">
+        <div class="container">
+            <a th:if="${name == null}" th:href="@{/login}" class="navbar-brand">FINANCE NEWS</a>
+            <a th:if="${name != null}" th:href="@{/index/(name=${name})}" class="navbar-brand">FINANCE NEWS</a>
+            <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navmenu"
+            >
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navmenu">
+            <ul th:if="${name != null}" class="navbar-nav me-auto">
+                <li class="nav-item">
+                <a th:href="@{/newslist?name={name}(name=${name})}" class="nav-link">News List</a>
+                </li>
+            </ul>
+            <!-- user not logged in -->
+            <ul th:if="${name == null}" class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                <a th:href="@{/login}" class="nav-link">Login</a>
+                </li>
+                <li class="nav-item">
+                <a th:href="@{/signup}" class="nav-link">Sign Up</a>
+                </li>
+            </ul>
+            <!-- user logged in -->
+            <ul th:if="${name != null}" class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                <a th:text=${name} class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" th:href="@{/logout}">Log Out</a></li>
+                </ul>
+                </li>
+            </ul>
+            </div>
+        </div>
+        </nav>
+</div>

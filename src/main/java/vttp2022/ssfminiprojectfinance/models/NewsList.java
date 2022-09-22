@@ -13,6 +13,7 @@ public class NewsList {
     private String status;
 
     class NewsListNews {
+        private String id;
         private boolean infoComplete;
         private String title;
         private String pubDate;
@@ -21,6 +22,9 @@ public class NewsList {
         private String[] stockTickers;
 
         NewsListNews(Map<String, Object> newsData) {
+            this.infoComplete = false;
+            this.id = (String) newsData.get("id");
+
             Map<String, Object> content = (Map<String, Object>) newsData.get("content");
             this.title = (String)content.get("title");
             this.pubDate = (String)content.get("pubDate");
@@ -32,11 +36,12 @@ public class NewsList {
             
             tmpMap = (Map<String, Object>) content.get("clickThroughUrl");
             if (tmpMap == null) { // at times clickThroughUrl: null
-                this.infoComplete = false;
                 return;
             }
             this.articleUrl = (String)tmpMap.get("url");
-
+            if (!this.articleUrl.startsWith("https://finance.yahoo.com")) {
+                return;
+            }
             // info is considered complete if we reached here
             this.infoComplete = true;
 
@@ -52,6 +57,9 @@ public class NewsList {
             }
         }
 
+        public String getId() {
+            return id;
+        }
         public String getTitle() {
             return title;
         }

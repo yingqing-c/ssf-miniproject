@@ -35,7 +35,6 @@ public class FinanceAPIService {
     // inject in the key
     @Value("${RAPID_API_KEY}")
     private String apiKey;
-     
 
     public News getNews(String uuid) {
         
@@ -65,13 +64,14 @@ public class FinanceAPIService {
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         try {
             response = mapper.readValue(resp.getBody(), News.class);
-            logger.info("response: ", response);
+            logger.info("response: ", response.getTitle());
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
 
         return response;
     }
+
     public NewsList getNewsList() {
 
         HttpResponse<String> resp;
@@ -117,15 +117,11 @@ public class FinanceAPIService {
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         try {
             response = mapper.readValue(resp.body(), NewsList.class);
-            logger.info("response: ", response);
+            // logger.info("response: ", response);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
 
         return response;
-    }
-
-    public int signup(User user) {
-        return 0;
     }
 }

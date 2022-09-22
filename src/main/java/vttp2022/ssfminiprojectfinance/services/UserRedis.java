@@ -16,6 +16,7 @@ public class UserRedis implements UserRepo {
 
     @Override
     public int save(final User userinfo) {
+        System.out.println(userinfo);
         redisTemplate.opsForValue().set(userinfo.getEmail(), userinfo);
         User result = (User) redisTemplate.opsForValue().get(userinfo.getEmail());
         if (result != null)

@@ -1,5 +1,8 @@
 package vttp2022.ssfminiprojectfinance.models;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -7,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class News {
     
+    private String id;
     private String title;
     private String url;
     private String[] authorsDisplayName;
@@ -14,9 +18,8 @@ public class News {
     private String pubDate;
     private String summary;
     private String imageURL;
-    private Integer originalHeight;
-    private Integer originalWidth;
     private String status;
+    private String markup;
 
 @SuppressWarnings("unchecked") 
 @JsonProperty("data")
@@ -24,6 +27,7 @@ private void unpackNested(Map<String,Object> data){
     List<Object> contents = (List<Object>)data.get("contents");
     Map<String, Object> content = (Map<String, Object>) contents.get(0);
     content = (Map<String, Object>) content.get("content");
+    this.id = (String) content.get("id");
     this.title = (String)content.get("title");
     Map<String, Object> canonicalUrl = (Map<String, Object>) content.get("canonicalUrl");
     this.url = (String) canonicalUrl.get("url");
@@ -44,110 +48,61 @@ private void unpackNested(Map<String,Object> data){
     this.summary = (String)content.get("summary");
 
     Map<String, Object> tmp = (Map<String, Object>) content.get("body");
+    this.markup = (String) tmp.get("markup");
     tmp = (Map<String, Object>) tmp.get("data");
     tmp = (Map<String, Object>) tmp.get("partnerData");
     tmp = (Map<String, Object>) tmp.get("cover");
     tmp = (Map<String, Object>) tmp.get("image");
     this.imageURL = (String) tmp.get("originalUrl");
-    this.originalHeight = (Integer) tmp.get("originalHeight");
-    this.originalWidth = (Integer) tmp.get("originalWidth");
 }
-
-@Override
-public String toString() {
-    return "News [authorsDisplayName=" + getAuthorsDisplayName() + ", originalHeight=" + originalHeight + ", imageUrl="
-            + imageURL + ", originalWidth=" + originalWidth + ", providerDisplayName=" + providerDisplayName
-            + ", pubDate=" + pubDate + ", summary=" + summary + ", title=" + title + "]";
-}
-
 
 public String getTitle() {
     return title;
-}
-
-public void setTitle(String title) {
-    this.title = title;
-}
-
-public String getProviderDisplayName() {
-    return providerDisplayName;
-}
-
-public void setProviderDisplayName(String providerDisplayName) {
-    this.providerDisplayName = providerDisplayName;
-}
-
-public String getPubDate() {
-    return pubDate;
-}
-
-public void setPubDate(String pubDate) {
-    this.pubDate = pubDate;
-}
-
-public String getSummary() {
-    return summary;
-}
-
-public void setSummary(String summary) {
-    this.summary = summary;
-}
-
-
-public Integer getOriginalHeight() {
-    return originalHeight;
-}
-
-public void setOriginalHeight(Integer originalHeight) {
-    this.originalHeight = originalHeight;
-}
-
-public Integer getOriginalWidth() {
-    return originalWidth;
-}
-
-public void setOriginalWidth(Integer originalWidth) {
-    this.originalWidth = originalWidth;
-}
-
-public String getStatus() {
-    return status;
-}
-
-public void setStatus(String status) {
-    this.status = status;
-}
-
-public String getAuthorsDisplayName() {
-    String res = "";
-    for (int i = 0; i < authorsDisplayName.length; i++) {
-        if (i > 0 && i < authorsDisplayName.length) {
-            res += ",";
-        }
-        res += authorsDisplayName[i];
-    }
-    return res;
-}
-
-public void setAuthorsDisplayName(String[] authorsDisplayName) {
-    this.authorsDisplayName = authorsDisplayName;
 }
 
 public String getUrl() {
     return url;
 }
 
-public void setUrl(String url) {
-    this.url = url;
+public String[] getAuthorsDisplayName() {
+    return authorsDisplayName;
+}
+
+public String getProviderDisplayName() {
+    return providerDisplayName;
+}
+
+public String getPubDate() {
+    
+    return pubDate;
+}
+
+public String getSummary() {
+    return summary;
 }
 
 public String getImageURL() {
     return imageURL;
 }
 
-public void setImageURL(String imageURL) {
-    this.imageURL = imageURL;
+
+public String getStatus() {
+    return status;
 }
 
+public String getMarkup() {
+    return markup;
+}
+
+public String getId() {
+    return id;
+}
+
+@Override
+public String toString() {
+    return "News [authorsDisplayName=" + Arrays.toString(authorsDisplayName) + ", id=" + id + ", imageURL=" + imageURL
+            + ", markup=" + markup + ", providerDisplayName=" + providerDisplayName + ", pubDate=" + pubDate
+            + ", status=" + status + ", summary=" + summary + ", title=" + title + ", url=" + url + "]";
+}
 
 }
