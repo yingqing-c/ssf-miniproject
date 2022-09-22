@@ -16,17 +16,16 @@ public class UserRedis implements UserRepo {
 
     @Override
     public int save(final User userinfo) {
-        System.out.println(userinfo);
-        redisTemplate.opsForValue().set(userinfo.getEmail(), userinfo);
-        User result = (User) redisTemplate.opsForValue().get(userinfo.getEmail());
+        redisTemplate.opsForValue().set(userinfo.getUsername(), userinfo);
+        User result = (User) redisTemplate.opsForValue().get(userinfo.getUsername());
         if (result != null)
             return 0;
         return 1;
     }
 
     @Override
-    public User findByEmail(final String email) {
-        User result = (User) redisTemplate.opsForValue().get(email);
+    public User findByUsername(final String username) {
+        User result = (User) redisTemplate.opsForValue().get(username);
         return result;
     }
 }

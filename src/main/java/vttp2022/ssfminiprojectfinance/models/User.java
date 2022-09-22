@@ -1,32 +1,20 @@
 package vttp2022.ssfminiprojectfinance.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
-    private String fullName;
+    private String username;
     private String email;
-    private boolean loggedIn;
+    private List<String> history = new ArrayList<>();
+    private List<String> titles = new ArrayList<>();
 
     public User() {
     }
 
-    public User(String fullName, String email) {
-        this.fullName = fullName;
+    public User(String username, String email) {
+        this.username = username;
         this.email = email;
-    }
-    
-    public boolean isLoggedIn() {
-        return loggedIn;
-    }
-
-    public void setLoggedIn(boolean loggedIn) {
-        this.loggedIn = loggedIn;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
     }
 
     public String getEmail() {
@@ -37,8 +25,28 @@ public class User {
         this.email = email;
     }
 
-    @Override
-    public String toString() {
-        return "User [email=" + email + ", fullName=" + fullName + ", loggedIn=" + loggedIn + "]";
+    public String getUsername() {
+        return username;
     }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public List<String> getHistory() {
+        return history;
+    }
+
+    public void setHistory(List<String> history) {
+        this.history = history;
+    }
+
+    public List<String> getTitles() {
+        return titles;
+    }
+
+    public void setTitles(List<String> titles) {
+        this.titles = titles;
+    }
+
 }

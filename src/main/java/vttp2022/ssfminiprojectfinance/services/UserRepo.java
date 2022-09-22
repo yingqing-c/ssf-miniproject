@@ -6,5 +6,5 @@ public interface UserRepo {
 
     public int save(final User userinfo);
 
-    public User findByEmail(final String email);
+    public User findByUsername(final String username);
 }

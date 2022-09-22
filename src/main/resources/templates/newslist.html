@@ -26,6 +26,7 @@
                 <img th:src="${news.imageUrl}" class="card-img-top" alt="...">
                 <div class="card-body">
                   <a th:href="@{https://boiling-fjord-31796.herokuapp.com/news/get-details/(name=${name},uuid=${news.id})}"><h5 class="card-title" strong data-th-text="${news.title}"></h5></a>
+                  <!-- <a th:href="@{http://localhost:8080/news/get-details/(name=${name},uuid=${news.id})}"><h5 class="card-title" strong data-th-text="${news.title}"></h5></a> -->
                   
                   <!-- <a th:href="@{https://boiling-fjord-31796.herokuapp.com/news/get-details/{id}(id=${news.id})}"><h5 class="card-title" strong data-th-text="${news.title}"></h5></a> -->
                   <p class="card-text">Published On: <span data-th-text="${news.pubDate}"></span></p>
@@ -40,18 +41,8 @@
     </main>
   
   
-      <!-- Footer -->
-      <footer class="p-5 bg-dark text-white text-center position-relative">
-        <div class="container">
-          <p class="lead">
-            Copyright &copy; 2022 Finance News. All rights reserved.
-          </p>
-  
-          <a href="#" class="position-absolute bottom-0 end-0 p-5">
-            <i class="bi bi-arrow-up-circle h1"></i>
-          </a>
-        </div>
-      </footer>
+    <div th:insert="fragments/footer.html :: footer"></div>
+
     
     <!-- Bootstrap -->
     <script

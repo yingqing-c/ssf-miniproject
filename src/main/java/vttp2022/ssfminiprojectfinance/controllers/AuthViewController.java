@@ -30,14 +30,13 @@ public class AuthViewController {
     public ModelAndView get(@ModelAttribute("user") User user, BindingResult result) {
         ModelAndView mav = new ModelAndView();
 
-        User u = service.findByEmail(user.getEmail());
+        User u = service.findByUsername(user.getUsername());
         if (u != null) {
             // model.addAttribute("error", "This email already exists");
             mav.addObject("error", "This email already exists");
             mav.setViewName("signup");
             return mav;
         }
-        user.setLoggedIn(true);
         int x = service.save(user);
         if (x != 0) {
             mav.addObject("error", "Sign up failed for unknown reasons, please try again.");
@@ -47,8 +46,8 @@ public class AuthViewController {
         }
 
         // model.addAttribute("success", "Successfully signed up");
-        // model.addAttribute("name", user.getFullName());
-        mav.addObject("name", user.getFullName());
+        // model.addAttribute("name", user.getUsername());
+        mav.addObject("name", user.getUsername());
         mav.setViewName("redirect:/index");
         return mav;
     }
@@ -67,9 +66,14 @@ public class AuthViewController {
             mav.setViewName("login");
             return mav;
         }
-        User u = service.findByEmail(user.getEmail());
-        // model.addAttribute("name", u.getFullName());
-        mav.addObject("name", u.getFullName());
+        User u = service.findByUsername(user.getUsername());
+        if (u == null) {
+            mav.addObject("error", "Invalid username");
+            mav.setViewName("login");
+            return mav;
+        }
+        // model.addAttribute("name", u.getUsername());
+        mav.addObject("name", u.getUsername());
         mav.setViewName("redirect:/index");
         return mav;
     }

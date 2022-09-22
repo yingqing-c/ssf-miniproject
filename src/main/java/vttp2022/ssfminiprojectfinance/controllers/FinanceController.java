@@ -1,5 +1,7 @@
 package vttp2022.ssfminiprojectfinance.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import vttp2022.ssfminiprojectfinance.models.News;
 import vttp2022.ssfminiprojectfinance.models.NewsList;
+import vttp2022.ssfminiprojectfinance.models.User;
 import vttp2022.ssfminiprojectfinance.services.FinanceAPIService;
 
 @Controller
@@ -31,7 +34,7 @@ public class FinanceController {
         model.addAttribute("name", name);
         News result = financeAPIService.getNews(uuid);
         model.addAttribute("result", result);
-
+        financeAPIService.updateHistory(name, uuid, result.getTitle());
         return "news";
     }
 
@@ -41,6 +44,15 @@ public class FinanceController {
         NewsList newsList = financeAPIService.getNewsList();
         model.addAttribute("newslist", newsList);
         return "newslist";
+    }
+
+    @GetMapping(path="/history")
+    public String getHistory(@RequestParam String name, Model model) {
+        model.addAttribute("name", name); 
+        User user = financeAPIService.getUser(name);
+        model.addAttribute("titles", user.getTitles());
+        model.addAttribute("history", user.getHistory());
+        return "history";
     }
 
 }

@@ -20,14 +20,14 @@ public class AuthenticateRestController {
 
     @PostMapping("/api/signup")
     public ResponseEntity<String> signUp(@RequestBody User user) {
-        if (user.getEmail() == null || user.getFullName() == null) {
+        if (user.getEmail() == null || user.getUsername() == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email and name must be provided");
         }
         System.out.println("Auth " + user);
-        User u = service.findByEmail(user.getEmail());
+        User u = service.findByUsername(user.getUsername());
         if (u != null) {
             return ResponseEntity.status(HttpStatus.OK)
-                                .body("This email already exists");
+                                .body("This username already exists");
         }
 
         int x = service.save(user);
@@ -42,9 +42,8 @@ public class AuthenticateRestController {
 
     // @GetMapping("/logout")
     // public ResponseEntity<String> signout(@RequestBody User user) {
-    //     User u = service.findByEmail(user.getEmail());
+    //     User u = service.findByUsername(user.getUsername());
     //     if (u != null) {
-    //        u.setLoggedIn(false);
     //        return ResponseEntity.ok().body("Logged out");
     //     }
     //     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid user");        

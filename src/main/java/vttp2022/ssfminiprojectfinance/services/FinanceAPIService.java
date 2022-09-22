@@ -5,9 +5,11 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -31,6 +33,9 @@ public class FinanceAPIService {
     
     // API call from yh finance
     public static final String URL = "https://yh-finance.p.rapidapi.com/";
+
+    @Autowired
+    private UserRedis redisService;
 
     // inject in the key
     @Value("${RAPID_API_KEY}")
@@ -123,5 +128,20 @@ public class FinanceAPIService {
         }
 
         return response;
+    }
+
+	public User getUser(String username) {
+        return redisService.findByUsername(username);
+	}
+
+    public boolean updateHistory(String username, String uuid, String title) {
+        User u = redisService.findByUsername(username);
+        List<String> history = u.getHistory();
+        u.getHistory().add(uuid);
+        u.setHistory(history);
+        List<String> titles = u.getTitles();
+        u.getTitles().add(title);
+        u.setTitles(titles);
+        return redisService.save(u) == 0;
     }
 }
